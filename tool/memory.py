@@ -24,20 +24,3 @@ def get_by_session_id(session_id:str) -> BaseChatMessageHistory:
     return store[session_id]
 
 
-
-
-
-
-# session_id = "user_1"
-
-# response = chat_bot.invoke(
-#     {"input": "我叫小明"}, 
-#     config={"configurable": {"session_id": session_id}}
-# )
-# print(response.content)
-
-# response = chat_bot.invoke(
-#     {"input": "我是谁？"}, 
-#     config={"configurable": {"session_id": session_id}}
-# )
-# print(response.content)

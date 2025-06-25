@@ -27,3 +27,37 @@ for m in models:
 #### How to build a base agent
 
 Agent记忆能力的实现
+
+```python
+class InMemoryHistory(BaseChatMessageHistory, BaseModel):
+    '''In memory implementation of chat message history'''
+
+    messages: list[BaseMessage] = Field(default_factory=list)
+    def add_messages(self, messages: list[BaseMessage]) -> None:
+        "Add a list of messages to the store"
+        self.messages.extend(messages)
+
+    def clear(self) -> None:
+        self.messages = []
+
+def get_by_session_id(session_id:str) -> BaseChatMessageHistory:
+
+    if session_id not in store:
+        store[session_id] = InMemoryHistory()
+
+    return store[session_id]
+
+session_id = "user_1"
+
+response = chat_bot.invoke(
+    {"input": "我叫小明"}, 
+    config={"configurable": {"session_id": session_id}}
+)
+print(response.content)
+
+response = chat_bot.invoke(
+    {"input": "我是谁？"}, 
+    config={"configurable": {"session_id": session_id}}
+)
+print(response.content)
+```
