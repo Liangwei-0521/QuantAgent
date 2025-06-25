@@ -37,7 +37,7 @@ class base_agent:
         self.chat_agent = ChatGoogleGenerativeAI(
             model=os.getenv('GEMINI_MODEL_NAME'), 
             temperature=0.2,
-            streaming=True
+            model_kwargs={"streaming": True},
         )
         self.chat_bot = prompt | self.chat_agent
         self.chat_workflow = RunnableWithMessageHistory(
@@ -53,19 +53,32 @@ class base_agent:
             {'input': input},
             config={"configurable": {"session_id": session_id}}
         ):
-            print(chunk.content, end="", flush=True)
             full_output += chunk.content
+        print(full_output)
+        
         return full_output
+    
+
+async def main():
+    
+    agent = base_agent()
+    session_id = "user_1"
+    print("欢迎使用智能Agent！输入 'exit' 可退出。\n")
+
+    while True:
+        question = input("😊 User: ")
+        if question.lower() == "exit":
+            break
+        print("🤖 Agent: ", end="", flush=True)
+        await agent.aresponse(session_id=session_id, input=question)
+        print("\n")  # 换行
     
 
 
 if __name__ == '__main__':
-    agent = base_agent()
-    response = asyncio.run(agent.aresponse(session_id='user_1', input='你好！请介绍美国的种族歧视'))
+
+   asyncio.run(main())
 
 
-    
 
-
-    
 
