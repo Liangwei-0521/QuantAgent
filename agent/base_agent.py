@@ -55,7 +55,7 @@ class base_agent:
         ):
             full_output += chunk.content
         print(full_output)
-        
+
         return full_output
     
 
@@ -63,7 +63,7 @@ async def main():
     
     agent = base_agent()
     session_id = "user_1"
-    print("欢迎使用智能Agent！输入 'exit' 可退出。\n")
+    print("欢迎使用智能Agent, 输入 'exit' 可退出。\n")
 
     while True:
         question = input("😊 User: ")
@@ -71,7 +71,7 @@ async def main():
             break
         print("🤖 Agent: ", end="", flush=True)
         await agent.aresponse(session_id=session_id, input=question)
-        print("\n")  # 换行
+   
     
 
 
