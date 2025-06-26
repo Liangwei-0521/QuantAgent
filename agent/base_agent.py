@@ -44,7 +44,7 @@ class base_agent:
             self.chat_bot,
             get_by_session_id,
             input_messages_key="input", 
-            history_messages_key="chat_history"
+            history_messages_key="chat_history",
         )
 
     async def aresponse(self, session_id, input):
